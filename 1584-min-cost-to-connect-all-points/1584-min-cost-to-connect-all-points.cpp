@@ -6,7 +6,7 @@ public:
         
         vector<vector<int>> graph(n, vector<int>(n));  //  graph
         
-       /// assign distance to the nodes 
+       /// assign distance/weights to the nodes 
         for(int i=0; i<n; i++) {
             for(int j=0; j<n; j++) { 
                 graph[i][j] = abs(points[i][0] - points[j][0]) + abs(points[i][1] - points[j][1]);
@@ -15,8 +15,7 @@ public:
         
         
         /// visited vector 
-        vector<int>visited;
-        visited.assign(n+1,0);
+        vector<int>visited(n+1,0);
         
         // min heap
         priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>>q;
