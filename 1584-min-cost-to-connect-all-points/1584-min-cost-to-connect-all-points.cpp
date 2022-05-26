@@ -19,20 +19,21 @@ public:
         
         // min heap
         priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>>q;
-        // push the distance and source node in the queue
-        q.push({0,0});
+        q.push({0,0}); // <weight, node>
         
         // to calculate the cost of Mst
         int ans=0;
       
-    // Prim Algo
+        // Prim Algo
         while(!q.empty()){
     
-            auto best=q.top();
+            auto curr=q.top();
             q.pop();
             
-            int src=best.second;/// source node
-            int weight=best.first;// distance of the source node
+            // weight/distance if the node
+            int weight=curr.first;
+            int src=curr.second;// source node
+            
             // check for visited nodes
             if(visited[src])continue;
             ans+=weight;
