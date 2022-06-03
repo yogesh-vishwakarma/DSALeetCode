@@ -1,6 +1,6 @@
 class Solution {
 public:
-    
+        /*With the help of the plot, we can come up with the top-down DP solution in an DFS way with memoization (cache).*/
         int solve(int n, vector<int>&dp){
         if(n==0 || n==1)
             return n;
@@ -21,7 +21,7 @@ public:
         return solve(n, dp);
     }
     
-    /*IThen we can convert the top-down solution to the bottom-up solution.
+    /* Then we can convert the top-down solution to the bottom-up solution.
     By knowing which subproblem is dependent on which subproblem, we can then decide the traverse direction of the dp table. 
     Larger numbers' results are dependent on smaller numbers, so smaller numbers should be solved first. */
     int numSquares2(int n) {
