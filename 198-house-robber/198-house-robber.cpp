@@ -1,6 +1,7 @@
 class Solution {
 public:
     /*
+    https://leetcode.com/problems/house-robber/discuss/156523/From-good-to-great.-How-to-approach-most-of-DP-problems.
     So it boils down to calculating what is more profitable:
         robbery of current house + loot from houses before the previous
         loot from the previous house robbery and any loot captured before that
@@ -40,5 +41,20 @@ public:
             prev2 = tmp;
         }
         return prev1;
+    }
+    
+    int rob2(vector<int>& nums) {
+        if(nums.size()==0)
+            return 0;
+        if(nums.size()==1)
+            return nums[0];
+        int first=nums[0];
+        int second=max(nums[0],nums[1]);
+        for(int i=2;i<nums.size();i++){
+            int prev_first=first; //storing prev i-2th value
+            first=second;
+            second=max(nums[i]+prev_first,second);
+        }
+       return second; 
     }
 };
