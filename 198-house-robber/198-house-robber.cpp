@@ -30,7 +30,7 @@ public:
     
     In the end we are returning the last dp state which stores our maximum value
     */
-    int rob(vector<int>& nums) {
+    int robMod(vector<int>& nums) {
         if (nums.size() == 0) 
             return 0;
         int prev1 = 0;
@@ -43,7 +43,7 @@ public:
         return prev1;
     }
     
-    int rob2(vector<int>& nums) {
+    int rob(vector<int>& nums) {
         if(nums.size()==0)
             return 0;
         if(nums.size()==1)
