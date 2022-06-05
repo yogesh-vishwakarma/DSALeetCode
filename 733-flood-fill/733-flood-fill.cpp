@@ -23,13 +23,14 @@ public:
         q.push({sr,sc});
         int color = image[sr][sc];
         image[sr][sc] = newColor;
-        int dx[4]={0,0,1,-1};
-        int dy[4]={1,-1,0,0};
+        int dx[4]={0,0,1,-1};// directional array
+        int dy[4]={1,-1,0,0};// directional array
         while(!q.empty()){
             int x=q.front().first;
             int y=q.front().second;
             q.pop();
             for(int i=0;i<4;i++){
+                // here we can use directional array to move into all direction
                int newX=x+dx[i];
                int newY=y+dy[i];
                if(newX>=0 && newY>=0 && newX<n && newY<m && image[newX][newY]==color){
@@ -39,7 +40,6 @@ public:
             }
         }   
      }
-    
     
     vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int newColor) {
         int n = image.size(), m = image[0].size();
