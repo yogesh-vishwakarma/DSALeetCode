@@ -1,14 +1,12 @@
-class Node
-{
+class Node{ // doubly linked list
     public:
         int key;
-    int val;
-    Node *next = NULL;
-    Node *prev = NULL;
+        int val;
+        Node *next = NULL;
+        Node *prev = NULL;
 };
 
-class LRUCache
-{
+class LRUCache{
     private:
     
     int cap; //to store capacity of cache
@@ -17,11 +15,8 @@ class LRUCache
     Node *tail = NULL; // intitialize tail to null
     unordered_map<int, Node*> mp; //initialize hash map instanse
 
-//     to update the Node
-    void updateNode(Node* &node)
-    {
-        if (tail == node)
-        {
+    void updateNode(Node* &node){ // to update the Node
+        if (tail == node){
             head->prev = tail;
             tail->next = head;
             head = tail;
@@ -29,8 +24,7 @@ class LRUCache
             tail->next = NULL;
             return;
         }
-        if (head == node)
-        {
+        if (head == node){
             return;
         }
         node->prev->next = node->next;
@@ -41,9 +35,7 @@ class LRUCache
         head = node;
     }
 
-//     to add new node to the list
-    void addNode(Node *node)
-    {
+    void addNode(Node *node){ // to add new node to the list
         head->prev = node;
         node->next = head;
         head = node;
@@ -51,92 +43,78 @@ class LRUCache
     }
 
     public:
-//     constructore initialize cache capacity
-        LRUCache(int capacity)
-        {
+        LRUCache(int capacity){ // constructore initialize cache capacity
             cap = capacity;
         }
 
-// get the val if found
-    int get(int key)
-    {
-//         fist check in hash map is their any key in list
-        auto it = mp.find(key);
-    
-//         if exist key then update the status of key
-        if (it != mp.end())
-        {
+        int get(int key){ // get the val if found
+            auto it = mp.find(key);
 
-            updateNode(it->second);
-            return it->second->val;
-        }
-//         else return -1
-        return -1;
-    }
-
-//     to add new key , value in cache
-    void put(int key, int value)
-    {
-//         check if the key already exist or not
-        auto it = mp.find(key);
-
-//         if key exist update its value and usage status
-        if (it != mp.end())
-        {
-            it->second->val = value;
-            updateNode(it->second);
-            return;
+            if (it != mp.end()){
+                updateNode(it->second);
+                return it->second->val;
+            }
+            return -1;
         }
 
-//         if head is null means list is empty
-        if (head == NULL)
-        {
-//             create new node
-            Node *newNode = new Node;
-            newNode->key = key;
-            newNode->val = value;
-//             add new node key,Node pair to hash map
-            mp.insert({ key,
-                newNode });
-//             assign newNode value to head
-            head = newNode;
-//             assign newNode value to tail as there is only one node
-            tail = newNode;
-//             increse number of element in cache
-            size++;
-            return;
-        }
-
-//         if size is less then cache no need to delete lru item simply add new node to list
-        if (size < cap)
-        {
-//             delcare new node
-            Node *newNode = new Node;
-            newNode->key = key;
-            newNode->val = value;
+        void put(int key, int value){
+            auto it = mp.find(key);
             
-//             add new node key,Node pair to hash map
-            mp.insert({ key,
-                newNode });
-//             add node to list
-            addNode(newNode);
-//             increse number of element in cache            
-            size++;
-            return;
-        }
+            if (it != mp.end()){
+                it->second->val = value;
+                updateNode(it->second);
+                return;
+            }
 
-// if cache is full remove element from tail lru
-        mp.erase(tail->key);
-        head->prev = tail;
-        tail->next = head;
-        head = tail;
-        tail = head->prev;
-        tail->next = NULL;
-        head->key = key;
-        head->val = value;
-        mp.insert({ key,
-            head });
-    }
+    //         if head is null means list is empty
+            if (head == NULL)
+            {
+    //             create new node
+                Node *newNode = new Node;
+                newNode->key = key;
+                newNode->val = value;
+    //             add new node key,Node pair to hash map
+                mp.insert({ key,
+                    newNode });
+    //             assign newNode value to head
+                head = newNode;
+    //             assign newNode value to tail as there is only one node
+                tail = newNode;
+    //             increse number of element in cache
+                size++;
+                return;
+            }
+
+    //         if size is less then cache no need to delete lru item simply add new node to list
+            if (size < cap)
+            {
+    //             delcare new node
+                Node *newNode = new Node;
+                newNode->key = key;
+                newNode->val = value;
+
+    //             add new node key,Node pair to hash map
+                mp.insert({ key,
+                    newNode });
+    //             add node to list
+                addNode(newNode);
+    //             increse number of element in cache            
+                size++;
+                return;
+            }
+
+    // if cache is full remove element from tail lru
+            mp.erase(tail->key);
+            head->prev = tail;
+            tail->next = head;
+            head = tail;
+            tail = head->prev;
+            tail->next = NULL;
+            head->key = key;
+            head->val = value;
+            mp.insert({ key,
+                head });
+        }
 };
 
 /**
