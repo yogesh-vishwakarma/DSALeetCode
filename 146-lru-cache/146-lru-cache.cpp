@@ -1,37 +1,43 @@
-class LRUCache
-{
-    public:
-        list<pair<int,int>> l;
-        unordered_map<int,list<pair<int, int>>::iterator> m;
-        int size;
-        LRUCache(int capacity)
-        {
-            size=capacity;
-        }
-        int get(int key)
-        {
-            if(m.find(key)==m.end())
-                return -1;
-            l.splice(l.begin(),l,m[key]);
-            return m[key]->second;
-        }
-        void put(int key, int value)
-        {
-            if(m.find(key)!=m.end())
-            {
-                l.splice(l.begin(),l,m[key]);
-                m[key]->second=value;
-                return;
+class LRUCache {
+    int capacity;
+    list< pair<int,int> > lruList;     // key, value pair
+    unordered_map< int, list<pair<int,int>>::iterator > hash;   // key to <key,val> iterator map
+
+    void moveToFront( int key, int value ) {
+	    // erase and add a new entry to front
+        lruList.erase( hash[key] ); // this is O(1) since we are using iterator
+        lruList.push_front( make_pair(key, value) );
+        hash[key] = lruList.begin();
+    }
+public:
+    LRUCache( int capacity ) {
+        this->capacity = capacity;
+    }
+    
+    int get( int key ) {
+        if( hash.find(key) == hash.end() )
+            return -1;
+		// move the key, value pair to front
+        int value = (*hash[key]).second;
+        moveToFront( key, value );
+        return (*hash[key]).second;
+    }
+    
+    void put( int key, int value ) {
+        if( hash.find(key) != hash.end() ) {
+            // when key is already in hash
+            moveToFront( key, value );
+        } else {
+		    // add to the cache
+            lruList.push_front( make_pair( key, value ) );
+            hash[key] = lruList.begin();
+            if( hash.size() > capacity ) {
+                // erase
+                hash.erase( lruList.back().first );
+                lruList.pop_back();
             }
-            if(l.size()==size)
-            {
-                auto d_key=l.back().first;
-                l.pop_back();
-                m.erase(d_key);
-            }
-            l.push_front({key,value});
-            m[key]=l.begin();
         }
+    }
 };
 
 /**
