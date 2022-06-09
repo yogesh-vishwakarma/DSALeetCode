@@ -4,15 +4,11 @@ public:
     std::vector<bool> mark(pieces.size(), false);
         
         int ia = 0;
-        while (ia < arr.size())
-        {
+        while (ia < arr.size()){
             bool found = false;
-            for (int i = 0; i < pieces.size(); i++)
-            {
-                if (!mark[i] && arr[ia] == pieces[i][0])
-                {
-                    for (int ip = 0; ip < pieces[i].size(); ip++, ia++)
-                    {
+            for (int i = 0; i < pieces.size(); i++){
+                if (!mark[i] && arr[ia] == pieces[i][0]){
+                    for (int ip = 0; ip < pieces[i].size(); ip++, ia++){
                         if (arr[ia] != pieces[i][ip])
                             return false;
                     }
