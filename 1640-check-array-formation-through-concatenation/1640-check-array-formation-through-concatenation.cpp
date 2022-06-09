@@ -1,13 +1,29 @@
 class Solution {
 public:
     bool canFormArray(vector<int>& arr, vector<vector<int>>& pieces) {
-    for (int row = 0; row < pieces.size(); row++) {
-      auto it = std::find(begin(arr), end(arr), pieces[row][0]);
-      for (int col = 0; col < pieces[row].size(); col++) {
-        if (it == end(arr)) return false;
-        if (*(it++) != pieces[row][col]) return false;
-      }
-    }
-    return true;
+    std::vector<bool> mark(pieces.size(), false);
+        
+        int ia = 0;
+        while (ia < arr.size())
+        {
+            bool found = false;
+            for (int i = 0; i < pieces.size(); i++)
+            {
+                if (!mark[i] && arr[ia] == pieces[i][0])
+                {
+                    for (int ip = 0; ip < pieces[i].size(); ip++, ia++)
+                    {
+                        if (arr[ia] != pieces[i][ip])
+                            return false;
+                    }
+                    mark[i] = true;
+                    found = true;
+                }
+            }
+            if (!found)
+                return false;
+        }
+        
+        return true;
   }
 };
