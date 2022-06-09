@@ -8,13 +8,19 @@ public:
     //         pq.pop();
     //     return pq.top();
     // }
+    
+    /*
+    Here we are using binary search on indexes of the vector nums
+    and check if out mid indexed value in vector is at which position in nums.
+    */
     int findKthLargest(vector<int>& nums, int k) {
-        int low = -1005, high = 1e4+2;       
+        int low = -1005, high = 1e4+2; // as given in constrains
         while(low < high) {
             int mid = low+(high-low)/2;
             int cnt = 0;
             for(auto i:nums) 
-                if(i>mid)cnt++;
+                if(i>mid)
+                    cnt++;
             
             if(cnt<k)
                 high = mid;
