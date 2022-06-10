@@ -1,39 +1,61 @@
 class Solution {
 public:
-
-    void Sum(vector<int>& candidates, int target, vector<vector<int> >& res, vector<int>& r, int i)
-    {
-        
-        if(target == 0)
-        {
-            // if we get exact answer
-            res.push_back(r);
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        vector<vector<int>> ans;
+        vector<int> temp;
+        sort(candidates.begin(), candidates.end());
+        // findCombTopDown(candidates, target, ans, temp, 0);
+        findCombBottomUp(candidates, target, 0, temp, ans);
+        return ans;
+    }
+    
+    /* top down approach */
+    void findCombTopDown(vector<int> &nums, int target, 
+                         vector<vector<int>> &ans, vector<int> curr, int ind){
+        // base case
+        if(ind == nums.size()){
+            /* if our curr vector satisfy the sum add it to ans
+            here we are modifying the target value, instead of that 
+            we could have added sum of all elements of curr vector */
+            if(target == 0){
+                ans.push_back(curr);
+            }
             return;
         }
         
-        while(i <  candidates.size() && target - candidates[i] >= 0)
-        {
-            // Till every element in the array starting
-            // from i which can contribute to the target
-            r.push_back(candidates[i]);// add them to vector
+        // pick element
+        if(nums[ind] <=  target){
+            curr.push_back(nums[ind]);
             
-            // recur for next numbers
-            Sum(candidates,target - candidates[i],res,r,i);
-            ++i;
+            // now run rec of when we choose the element nums[ind]
+            findCombTopDown(nums,target-nums[ind],ans,curr,ind);
             
-            // Remove number from vector (backtracking)
-            r.pop_back();
+            //now we will pop the nums[ind] to create rec for scenario where we won't pich the element.
+            curr.pop_back();
         }
-}
+        // now we will create rec for scenario of ignoring the curr index and move further
+        findCombTopDown(nums,target,ans,curr,ind+1);
+    }
     
-     
-    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
-        sort(candidates.begin(),candidates.end()); // sort candidates array
-        vector<int> r;
-        vector<vector<int> > res;
+    
+    /* bottom up approach */
+    
+    void findCombBottomUp(vector<int> &cd, int target, 
+                        int start, vector<int> output, vector<vector<int>> &result){
+        if(target == 0){
+            result.push_back(output);
+            return;
+        }
         
-        Sum(candidates,target,res,r,0);
-        
-        return res;
+        for(int i = start; i < cd.size(); i++){
+            int val = cd[i];
+            if(target >= val){
+                output.push_back(val);
+                findCombBottomUp(cd, target - val,i, output, result);
+                output.pop_back();
+            } else {
+                break;
+            }
+        }
     }
 };
