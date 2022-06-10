@@ -4,8 +4,8 @@ public:
         vector<vector<int>> ans;
         vector<int> temp;
         sort(candidates.begin(), candidates.end());
-        // findCombTopDown(candidates, target, ans, temp, 0);
-        findCombBottomUp(candidates, target, 0, temp, ans);
+        findCombTopDown(candidates, target, ans, temp, 0);// sorting not necessary
+        // findCombBottomUp(candidates, target, 0, temp, ans);// req sorting
         return ans;
     }
     
@@ -39,23 +39,23 @@ public:
     
     
     /* bottom up approach */
-    
-    void findCombBottomUp(vector<int> &cd, int target, 
-                        int start, vector<int> output, vector<vector<int>> &result){
+    void findCombBottomUp(vector<int> &cd, int target, int start, 
+                          vector<int> output, vector<vector<int>> &result){
+        //base case
         if(target == 0){
             result.push_back(output);
             return;
         }
         
+        // generate all posible combinations
         for(int i = start; i < cd.size(); i++){
-            int val = cd[i];
-            if(target >= val){
-                output.push_back(val);
-                findCombBottomUp(cd, target - val,i, output, result);
+
+            if(target >= cd[i]){
+                output.push_back(cd[i]); // choose curr element
+                findCombBottomUp(cd, target - cd[i],i, output, result);
                 output.pop_back();
-            } else {
+            }else
                 break;
-            }
         }
     }
 };
