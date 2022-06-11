@@ -5,21 +5,21 @@
 <p>&nbsp;</p>
 <p><strong>Example 1:</strong></p>
 
-<pre style="position: relative;"><strong>Input:</strong> nums = [1,3,5,6], target = 5
+<pre><strong>Input:</strong> nums = [1,3,5,6], target = 5
 <strong>Output:</strong> 2
-<div class="open_grepper_editor" title="Edit &amp; Save To Grepper"></div></pre>
+</pre>
 
 <p><strong>Example 2:</strong></p>
 
-<pre style="position: relative;"><strong>Input:</strong> nums = [1,3,5,6], target = 2
+<pre><strong>Input:</strong> nums = [1,3,5,6], target = 2
 <strong>Output:</strong> 1
-<div class="open_grepper_editor" title="Edit &amp; Save To Grepper"></div></pre>
+</pre>
 
 <p><strong>Example 3:</strong></p>
 
-<pre style="position: relative;"><strong>Input:</strong> nums = [1,3,5,6], target = 7
+<pre><strong>Input:</strong> nums = [1,3,5,6], target = 7
 <strong>Output:</strong> 4
-<div class="open_grepper_editor" title="Edit &amp; Save To Grepper"></div></pre>
+</pre>
 
 <p>&nbsp;</p>
 <p><strong>Constraints:</strong></p>
