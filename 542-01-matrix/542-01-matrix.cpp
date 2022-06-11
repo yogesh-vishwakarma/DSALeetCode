@@ -1,36 +1,35 @@
 class Solution {
 public:
-   vector<vector<int>> updateMatrix(vector<vector<int>>& mat) {
-        int n = mat.size();
-        int m = mat[0].size();
-        vector<vector<int>> ans(n, vector<int> (m, INT_MAX));
-        queue<pair<int, int>> q;
-        for(int i=0; i<n; i++) {
-            for(int j=0; j<m; j++) {
-                if(mat[i][j] == 0) {
-                    ans[i][j] = 0;
-                    q.push({i, j});
+    vector<vector<int>> updateMatrix(vector<vector<int>>& matrix) {
+        int rows = matrix.size();
+        if (rows == 0) 
+            return matrix;
+        int cols = matrix[0].size();
+        vector<vector<int>> dist(rows, vector<int> (cols, INT_MAX - 100000));
+
+        //First pass: check for left and top
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (matrix[i][j] == 0) {
+                    dist[i][j] = 0;
+                } else {
+                    if (i > 0)
+                        dist[i][j] = min(dist[i][j], dist[i - 1][j] + 1);
+                    if (j > 0)
+                        dist[i][j] = min(dist[i][j], dist[i][j - 1] + 1);
                 }
             }
         }
-        int di[4] = {0, 0, 1, -1};
-        int dj[4] = {1, -1, 0, 0};
-        while(!q.empty()) {
-            auto top = q.front();
-            q.pop();
-            int i = top.first;
-            int j = top.second;
-            for(int c=0; c<4; c++) {
-                int ni = i + di[c];
-                int nj = j + dj[c];
-                if(ni>=0 && ni<n && nj>=0 && nj<m) {
-                    if(ans[ni][nj] > ans[i][j]+1) {
-                        ans[ni][nj] = ans[i][j]+1;
-                        q.push({ni, nj});
-                    }
-                }
+
+        //Second pass: check for bottom and right
+        for (int i = rows - 1; i >= 0; i--) {
+            for (int j = cols - 1; j >= 0; j--) {
+                if (i < rows - 1)
+                    dist[i][j] = min(dist[i][j], dist[i + 1][j] + 1);
+                if (j < cols - 1)
+                    dist[i][j] = min(dist[i][j], dist[i][j + 1] + 1);
             }
         }
-        return ans;
+        return dist;
     }
 };
