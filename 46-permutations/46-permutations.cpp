@@ -12,9 +12,9 @@ public:
         vector<int> curr; // intermediatory dataset to hold the indivisual ppermutation.
         // freq array to check if we have already used that index element
         int freq[nums.size()]; memset( freq, 0, sizeof(freq) ); // initializing all elements of the array to zero
-        permuteBottomUP(nums,res,curr, freq);
+        // permuteBottomUP(nums,res,curr, freq);
         
-        // permuteTopDown(0, nums, ans);
+        permuteTopDown(0, nums, res);
         return res;
     }
     
@@ -36,6 +36,19 @@ public:
                 curr.pop_back(); // now we will pop that element
                 freq[i] = 0;  // and also mark that element unused
             }
+        }
+        
+    }
+    
+    void permuteTopDown(int idx, vector<int> &nums, vector<vector<int>> &res){
+        if(idx == nums.size()){
+            res.push_back(nums);
+            return;
+        }
+        for(int i = idx;i<nums.size();i++){
+            swap( nums[idx], nums[i] );
+            permuteTopDown( idx+1,nums,res);
+            swap( nums[idx], nums[i] );
         }
         
     }
