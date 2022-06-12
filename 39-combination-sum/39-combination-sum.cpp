@@ -1,61 +1,23 @@
 class Solution {
 public:
     vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
-        vector<vector<int>> ans;
-        vector<int> temp;
-        sort(candidates.begin(), candidates.end());
-        findCombTopDown(candidates, target, ans, temp, 0);// sorting not necessary
-        // findCombBottomUp(candidates, target, 0, temp, ans);// req sorting
-        return ans;
+        vector<vector<int>> res;
+        vector<int> curr;
+        recurBottomUp(candidates, target, curr, res, 0);
+        return res;
     }
     
-    /* top down approach */
-    void findCombTopDown(vector<int> &nums, int target, 
-                         vector<vector<int>> &ans, vector<int> curr, int ind){
-        // base case
-        if(ind == nums.size()){
-            /* if our curr vector satisfy the sum add it to ans
-            here we are modifying the target value, instead of that 
-            we could have added sum of all elements of curr vector */
-            if(target == 0){
-                ans.push_back(curr);
-            }
+    void recurBottomUp(vector<int> nums, int target, vector<int> &curr, vector<vector<int>> &res, int idx){
+        if(idx == nums.size()){
+            if(target == 0)
+                res.push_back(curr);
             return;
         }
-        
-        // pick element
-        if(nums[ind] <=  target){
-            curr.push_back(nums[ind]);
-            
-            // now run rec of when we choose the element nums[ind]
-            findCombTopDown(nums,target-nums[ind],ans,curr,ind);
-            
-            //now we will pop the nums[ind] to create rec for scenario where we won't pich the element.
+        if(target >= nums[idx]){
+            curr.push_back(nums[idx]);
+            recurBottomUp(nums,target-nums[idx],curr,res,idx);
             curr.pop_back();
         }
-        // now we will create rec for scenario of ignoring the curr index and move further
-        findCombTopDown(nums,target,ans,curr,ind+1);
-    }
-    
-    
-    /* bottom up approach */
-    void findCombBottomUp(vector<int> &cd, int target, int start, 
-                          vector<int> output, vector<vector<int>> &result){
-        //base case
-        if(target == 0){
-            result.push_back(output);
-            return;
-        }
-        
-        // generate all posible combinations
-        for(int i = start; i < cd.size(); i++){
-
-            if(target >= cd[i]){
-                output.push_back(cd[i]); // choose curr element
-                findCombBottomUp(cd, target - cd[i],i, output, result);
-                output.pop_back();
-            }else
-                break;
-        }
+        recurBottomUp(nums,target,curr,res,idx+1);
     }
 };
