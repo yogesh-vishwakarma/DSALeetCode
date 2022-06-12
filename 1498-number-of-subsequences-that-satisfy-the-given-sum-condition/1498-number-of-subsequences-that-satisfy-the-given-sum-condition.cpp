@@ -1,32 +1,27 @@
 class Solution {
 public:
     
-    int power(long long x, long long y, long long p)
-    {
-        long long res = 1;
-        x = x % p;
-        if (x == 0) return 0;
-        while (y > 0)
-        {
-            if (y & 1)
-                res = (res*x) % p;
-            y = y>>1;
-            x = ((x%p)*(x%p)) % p;
+    int numSubseq(vector<int>& nums, int target) {
+        sort(nums.begin(), nums.end());
+
+        int l = 0;
+        int r = nums.size()-1;
+        int ans = 0;
+        long long por[nums.size()+1];
+        por[0]=1;
+
+        /// Also, we can reduce the no.calculations for calculating power as well (I just didn't do it here)
+        for (int i=1; i<=nums.size(); i++) {
+            por[i] = (2*por[i-1])%1000000007;
         }
-        return (int)(res%p);
-    }
-    
-    int numSubseq(vector<int>& a, int target) {
-        sort(a.begin(), a.end());
-        int ans = 0, mod = 1e9+7, l=0, r=a.size();
-        for(int i=0;i<r;i++){
-            int idx = upper_bound(a.begin(), a.end(), target-a[i]) - a.begin();
-            if(a[i]*2<=target) {
-                ans+=1;
+        while(l<=r) {
+            int sum = nums[l]+nums[r];
+            if (sum<=target) {
+                ans = ((ans + por[r-l])%1000000007);
+                l++;
+            } else {
+                r--;
             }
-            if(idx>=0 && idx==a.size() || a[idx] != target-a[i]) idx--;
-            if(idx<i) continue;
-            ans = ((ans%mod)+(power(2, idx - i, mod)%mod)%mod) - 1;
         }
         return ans;
     }
