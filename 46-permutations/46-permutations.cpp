@@ -1,55 +1,58 @@
 class Solution {
 public:
     
-    /* 
+bool METHOD1 = false; 
+        
     
-    numbers of permutations is: n!
-    
-    */
     vector<vector<int>> permute(vector<int>& nums) {
-        vector<vector<int>> res; // our dataset which will hold all results
+        vector<vector<int>> res;
         
-        vector<int> curr; // intermediatory dataset to hold the indivisual ppermutation.
-        // freq array to check if we have already used that index element
-        int freq[nums.size()]; memset( freq, 0, sizeof(freq) ); // initializing all elements of the array to zero
-        // permuteBottomUP(nums,res,curr, freq);
+        if(METHOD1){
+            vector<int> curr;
+            int freq[nums.size()];memset( freq, 0, sizeof(freq) ); // initialized to zero
+            recBottomUp(nums,res,curr,freq);
+        }else{
+            recMethod2(nums, res, 0);
+        }
         
-        permuteTopDown(0, nums, res);
         return res;
     }
     
-    void permuteBottomUP(vector<int> nums,vector<vector<int>> &res, vector<int> &curr,  int freq[] ){
-        
-        // base case
-        if(curr.size() == nums.size()){
+    void recBottomUp( vector<int> nums, vector<vector<int>> &res, vector<int> &curr, int *freq){
+        //base case
+        if(curr.size()==nums.size()){
             res.push_back(curr);
             return;
         }
-        
-        //bottom up for loop
+        /*
+        we created recursion of all the elements of nums.
+        we use freq array to check if that element is already used in permutation or not.
+        */
         for(int i=0;i<nums.size();i++){
-            
-            if(!freq[i]){ //we check if the ith index is already visited or not
-                curr.push_back(nums[i]); // we will take ith element in our permutation
-                freq[i] = 1; // we will mark that element as already used
-                permuteBottomUP(nums,res,curr,freq); // call the recursion 
-                curr.pop_back(); // now we will pop that element
-                freq[i] = 0;  // and also mark that element unused
-            }
+            if(freq[i])
+                continue;
+            curr.push_back(nums[i]);
+            freq[i] = 1;
+            recBottomUp(nums, res, curr, freq);
+            freq[i] = 0;
+            curr.pop_back();
         }
-        
     }
     
-    void permuteTopDown(int idx, vector<int> &nums, vector<vector<int>> &res){
-        if(idx == nums.size()){
+    void recMethod2(vector<int> nums, vector<vector<int>> &res, int index){
+        // base case
+        if(index == nums.size()){
             res.push_back(nums);
             return;
         }
-        for(int i = idx;i<nums.size();i++){
-            swap( nums[idx], nums[i] );
-            permuteTopDown( idx+1,nums,res);
-            swap( nums[idx], nums[i] );
+        /*
+        Using swap method, we can generate all possible combinations.
+        here the index pointer works in simillar way to freq array in prev meathod.
+        */
+        for(int i(index);i<nums.size();i++){
+            swap(nums[index], nums[i]);
+            recMethod2(nums,res,index+1);
+            swap(nums[index], nums[i]);
         }
-        
     }
 };
