@@ -1,39 +1,15 @@
 class Solution {
 public:
-    vector<int> twoSum(vector<int>& numbers, int target) {
-        int len = numbers.size(), index1, index2;
-        for (int i = 0; i < len; i++) {
-            int wanted = target - numbers[i];
-            index2 = binarySearch(i + 1, len - 1, numbers, wanted);
-            if (index2 != -1) {
-                index1 = i;
-                break;
-            }
-            index2 = binarySearch(0, i - 1, numbers, wanted);
-            if (index2 != -1) {
-                index1 = i;
-                break;
-            }
-        }
+    vector<int> twoSum(vector<int>&arr, int t) {
         
-        return { index1 + 1, index2 + 1 };
-    }
-    
-    int binarySearch(int startIndex, int endIndex, vector<int> &numbers, int wanted) {
-        int left = startIndex, right = endIndex, mid;
-        while (left <= right) {
-            mid = (left + right) / 2;
-            if (numbers[mid] == wanted) {
-                return mid;
-            }
-            else if (numbers[mid] > wanted) {
-                right = mid - 1;
-            }
-            else {
-                left = mid + 1;
-            }
+        for(int i=0;i<arr.size();i++){
+            int k = t-arr[i];
+            int ind = upper_bound(arr.begin(),arr.end(),k)-arr.begin();
+            
+            if(arr[ind-1]==k and ind-1!=i)
+                return {min(i+1,ind),max(i+1,ind)};
         }
+        return {};
         
-        return -1;
     }
 };
