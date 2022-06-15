@@ -3,13 +3,16 @@ public:
     int method = 2;
     
     int singleNonDuplicate(vector<int>& nums) {
-        int res(0);int n = nums.size();
+        int n = nums.size();
         if(method == 1){
             /* XOR approach */
+            int res(0);
             for(auto itr : nums)
                 res = res^itr;
+            return res;
             
         }else if(method == 2){
+            /*Binary Search*/
             int low = 0, high = n - 2;
         
             while (low <= high) {
@@ -32,6 +35,6 @@ public:
             return nums[low];
             
         }
-        return res;
+        return 0;
     }
 };
