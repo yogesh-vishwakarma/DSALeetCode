@@ -28,7 +28,7 @@ public:
                 int c = p.second + offsets[k+1];
                 if(r>=0 && r<m && c>=0 && c<n && grid[r][c] == '1'){
                     grid[r][c] = '0';
-                    todo.push({r,c,});
+                    todo.push({r,c});
                 }
             }
         }
