@@ -5,7 +5,7 @@ public:
         while (lo < hi) {
             int mid = (lo + hi) / 2;
 
-            double num = (nums[mid] < nums[0]) == (target < nums[0]) ? nums[mid] : (target < nums[0] ? -INFINITY : INFINITY);
+            double num = (nums[mid] < nums[lo]) == (target < nums[lo]) ? nums[mid] : (target < nums[lo] ? -INFINITY : INFINITY);
 
             if (num < target)
                 lo = mid + 1;
