@@ -25,22 +25,27 @@ int sqrt_num(int c)
     
     bool judgeSquareSum(int c) {
         // we use two pointer algorithm to find the pair of numbers 
-        int sqrt_c = sqrt_num(c); 
+//         int sqrt_c = sqrt_num(c); 
         
-        long long low = 0; 
-        long long high = sqrt_c;  
+//         long long low = 0; 
+//         long long high = sqrt_c;  
         
-        while(low <= high){
-            if(low*low + high*high < c){
-                low++;
-            }
-            else if(low * low + high * high > c){
-                high--;
-            }
-            else if(low * low + high * high == c){
-                return true; 
-            }
+//         while(low <= high){
+//             if(low*low + high*high < c){
+//                 low++;
+//             }
+//             else if(low * low + high * high > c){
+//                 high--;
+//             }
+//             else if(low * low + high * high == c){
+//                 return true; 
+//             }
+//         }
+//         return false; 
+        for(int i=0;i<=sqrt(c);i++) {
+            int t=sqrt(c-i*i);
+            if(t*t==c-i*i) return true;
         }
-        return false; 
+        return false;
     }
 };
