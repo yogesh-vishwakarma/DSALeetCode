@@ -13,35 +13,38 @@ public:
 //         for(auto e : mp) if(e.second == count) ans++;
 //         return max((int)tasks.size(), ans);
 //     }
-    
     int leastInterval(vector<char>& tasks, int n) {
-        unordered_map<char, int> counts;
-        for (char t : tasks) {
-            counts[t]++;
-        }
-        priority_queue<int> pq;
-        for (pair<char, int> count : counts) {
-            pq.push(count.second);
-        }
-        int alltime = 0;
-        int cycle = n + 1;
-        while (!pq.empty()) {
-            int time = 0;
-            vector<int> tmp;
-            for (int i = 0; i < cycle; i++) {
-                if (!pq.empty()) {
-                    tmp.push_back(pq.top());
-                    pq.pop();
-                    time++;
-                }
+        //INTUITION: Say we have 3 A, 2 B, 1 C tasks
+        //We place the most frequent tasks first
+        //A ? ? A ? ? A ... gap between two same tasks must be alteast n = 2 (let)
+        //We place next most frequent now: A B ? A B ? A
+        //Then finally: A B C A B ? A
+        //Only one place left which will be idle
+        
+        //So if we calculate the total idle time, then total time = tasks.length()+idle time
+        //ALGO: Find the maximum frequent letter and then accordingly calculate the number of elements in between them.
+        
+        vector<int> count(26,0);
+        int max = 0, maxc = 0;
+        for(auto t: tasks)
+        {
+            count[t-'A']++;
+            if(max==count[t-'A'])
+                maxc++;
+            if(count[t-'A']>max)
+            {
+                max = count[t-'A'];
+                maxc = 1;
             }
-            for (int cnt : tmp) {
-                if (--cnt) {
-                    pq.push(cnt);
-                }
-            }
-            alltime += !pq.empty() ? cycle : time;
         }
-        return alltime;
+        
+        int gapCount = max - 1; // A ... A. ..A ..so gaps in between  = 3-1 = 2
+        int gapLength = n - (maxc-1); // n is the minimum gap length between two similar elements. So if maxc no. of elements have the max frequency, the gap will be reduced.
+        int slotsEmpty = gapCount * gapLength;
+        int tasksAvailable = tasks.size() - (max * maxc); //tasks other than the most frequent tasks
+        int idleSlots = (slotsEmpty - tasksAvailable)>0?(slotsEmpty - tasksAvailable):0;
+        //if slotsEmpty < tasksAvailable by any chance, we know we can arrange all distinct letters in between, but no idle slots will be left. This will handle the condition of more than one most frequent elements present.
+        
+        return tasks.size() + idleSlots;
     }
 };
