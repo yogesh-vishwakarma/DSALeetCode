@@ -27,7 +27,7 @@ public:
     void nextPermutation(vector<int>& nums) {    
         int n = nums.size(), breakPt = n-2;
         
-        while(breakPt>=0 && nums[breakPt] >= nums[breakPt+1]) 
+        while(breakPt>=0 && nums[breakPt] >= nums[breakPt+1]) // finding break Point
             breakPt--;
         
         if(breakPt<0){
@@ -36,12 +36,8 @@ public:
         }
         
         int nxtGr = n-1;
-        while(nxtGr > breakPt && nums[nxtGr] <= nums[breakPt])
+        while(nxtGr > breakPt && nums[nxtGr] <= nums[breakPt])// finding smallest no bigger than breakPt
             nxtGr--;
-        // for(nxtGr = n-1;nxtGr>breakPt;nxtGr--){
-        //     if(nums[nxtGr]>nums[breakPt])
-        //         break;
-        // }
         swap(nums[breakPt],nums[nxtGr]);
         
         reverse(nums.begin()+breakPt+1,nums.end());
