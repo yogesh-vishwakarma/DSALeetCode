@@ -11,19 +11,36 @@
  */
 class Solution {
 public:
-    bool check(TreeNode* root,TreeNode* min,TreeNode* max){
-        if(root==NULL) return true;
-        
-        if(min!=NULL && root->val <= min->val){
-            return false;
-        }
-        if(max!=NULL && root->val >= max->val){
-            return false;
+     # define ll long long
+    bool search(TreeNode* node,ll min, ll max){
+        if(node==NULL){
+            return true;
         }
         
-        return check(root->left,min,root) && check(root->right,root,max);
+        ll data = node->val;
+        ll ldata=min,rdata=max;
+        bool ls,rs;
+        
+        if(node->left!=NULL){
+            ldata= node->left->val;
+        }
+        if(node->right!=NULL){
+            rdata= node->right->val;
+        }
+        
+        ls= search(node->left,min,data);
+        rs= search(node->right,data,max);
+        
+        
+        if(data>ldata && data<rdata && data>min && data < max){
+            return(true && ls && rs);
+        }
+            
+        return false;
     }
+    
     bool isValidBST(TreeNode* root) {
-        return check(root,NULL,NULL);
+        
+      return search(root,-999999999999999,99999999999999);
     }
 };
