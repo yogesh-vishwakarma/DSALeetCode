@@ -3,7 +3,7 @@ public:
 /*
 Method 1: 3 for loops
 
-Method 2: Hashing
+Method 2: Hashing, sets
         hashmap <pair, occurence>
 
 Optimal: 
@@ -16,7 +16,7 @@ Optimal:
         int a, b, c; // nums[a]+nums[b]+nums[c] = 0
         
         for(a=0 ; a < n-2; a++){ // n-2, n-1 elements should be b and c
-            if(a==0 || (a>0 && nums[a]!=nums[a-1]) ){ // to avoid duplicates
+            if(a==0 || (a>0 && nums[a]!=nums[a-1]) ){ // to ignore duplicates
                 b = a+1, c = n-1;
                 int sum = targetSum - nums[a]; //to check nums[b] + nums[c] = sum;
                 while(b<c){
