@@ -25,23 +25,25 @@ public:
     }
     
     void nextPermutation(vector<int>& nums) {    
-        int n = nums.size(), localMax = n-2;
+        int n = nums.size(), breakPt = n-2;
         
-        while(localMax>=0 && nums[localMax] >= nums[localMax+1]) 
-            localMax--;
-        // localMax++;
-        cout << localMax<<endl;
-        if(localMax<0){
+        while(breakPt>=0 && nums[breakPt] >= nums[breakPt+1]) 
+            breakPt--;
+        
+        if(breakPt<0){
             reverse(nums.begin(), nums.end());
             return;
         }
-        int i;
-        for(i = n-1;i>localMax;i--){
-            if(nums[i]>nums[localMax])
-                break;
-        }
-        swap(nums[localMax],nums[i]);
         
-        reverse(nums.begin()+localMax+1,nums.end());
+        int nxtGr = n-1;
+        while(nxtGr > breakPt && nums[nxtGr] <= nums[breakPt])
+            nxtGr--;
+        // for(nxtGr = n-1;nxtGr>breakPt;nxtGr--){
+        //     if(nums[nxtGr]>nums[breakPt])
+        //         break;
+        // }
+        swap(nums[breakPt],nums[nxtGr]);
+        
+        reverse(nums.begin()+breakPt+1,nums.end());
     }
 };
