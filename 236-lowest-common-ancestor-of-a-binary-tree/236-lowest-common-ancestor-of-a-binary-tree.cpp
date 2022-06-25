@@ -22,7 +22,8 @@ public:
             return right;
         else if(right == NULL)
             return left;
-        else//both left and right are not null, we found our result
+       //both left and right are not null, we found our result 
+       else
             return root;
     }
 };
