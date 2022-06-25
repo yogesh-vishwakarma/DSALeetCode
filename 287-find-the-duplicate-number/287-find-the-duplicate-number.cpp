@@ -20,17 +20,19 @@ public:
     }
     
     int findDuplicate(vector<int>& nums) {
-        int slow = nums[0];
-        int fast = nums[0];
-        do {
-        slow = nums[slow];
-        fast = nums[nums[fast]];
-        } while (slow != fast);
-        fast = nums[0];
-        while (slow != fast) {
-        slow = nums[slow];
-        fast = nums[fast];
+        int len = nums.size();
+        int slow = 0;
+        int fast = 0;
+        while(slow<len && fast <len) {
+            slow = nums[slow];
+            fast = nums[nums[fast]];
+            if(slow==fast) break;
         }
-        return slow;
+        int curr = 0;
+        while(curr!=slow) {
+            curr = nums[curr];
+            slow = nums[slow];
+        }
+        return curr;
     }
 };
