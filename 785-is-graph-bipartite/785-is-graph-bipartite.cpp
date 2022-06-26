@@ -1,6 +1,7 @@
 class Solution {
 public:
-    // TC: 
+    // TC: O(N+E)
+    // SC: O(N+E) + O(N) + O(N)
     bool isBipartite(vector<vector<int>>& graph) {
         int vCount = graph.size();
         vector<int> color(vCount,-1);
