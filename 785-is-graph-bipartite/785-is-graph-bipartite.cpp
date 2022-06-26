@@ -9,7 +9,10 @@ public:
         for(int i=0;i<vCount;i++){
             if(color[i] != -1)// means already visited/colored
                 continue;
-            if(!biPartiteBFS(i,graph,color))
+            // if(!biPartiteBFS(i,graph,color))
+            //     return false;
+            
+            if(!biPartiteDFS(i,graph,color))
                 return false;
             
         }
@@ -34,5 +37,17 @@ public:
             }
         }
         return true;
+    }
+    
+    bool biPartiteDFS(int node, vector<vector<int>>& adj, vector<int> &color){
+        for(auto it : adj[node]) {
+            if(color[it] == -1) {
+                color[it] = 1 - color[node];
+                if(!biPartiteDFS(it, adj, color)) {
+                    return false; 
+                }
+            } else if(color[it] == color[node]) return false; 
+        }
+        return true; 
     }
 };
