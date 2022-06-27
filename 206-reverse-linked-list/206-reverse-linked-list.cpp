@@ -10,15 +10,15 @@
  */
 class Solution {
 public:
+    /*easyiest Solution*/
     ListNode* reverseList(ListNode* head) {
-        ListNode *pre = new ListNode(0), *cur = head;
-        pre -> next = head;
-        while (cur && cur -> next) {
-            ListNode* temp = pre -> next;
-            pre -> next = cur -> next;
-            cur -> next = cur -> next -> next;
-            pre -> next -> next = temp;
+        ListNode* curr = head, * prev = NULL;
+        while(curr){
+            ListNode* nextPtr = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = nextPtr;
         }
-        return pre -> next;
+        return prev;
     }
 };
