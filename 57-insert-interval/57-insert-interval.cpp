@@ -1,8 +1,40 @@
 class Solution {
 public:
-    vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval) {
+    vector<vector<int>> insert1(vector<vector<int>>& intervals, vector<int>& newInterval) {
         return myInsert(intervals, newInterval);
     }
+    
+    vector<vector<int>> insert2(vector<vector<int>>& intervals, vector<int>& newInterval) {
+        intervals.push_back(newInterval);
+        sort(intervals.begin(),intervals.end());
+        vector<vector<int>> res;
+        res.push_back(intervals[0]);
+        for(int i=1;i<intervals.size();i++)
+        {
+            if(intervals[i][0]>res.back()[1])
+                res.push_back(intervals[i]);
+            else
+                res.back()[1]=max(res.back()[1],intervals[i][1]);
+        }
+        return res;
+        
+    }
+    
+    vector<vector<int>> insert(vector<vector<int>>& ints, vector<int>& ni, int i = 0) {
+        vector<vector<int>> res;
+        for (; i < ints.size() && ints[i][0] <= ni[1]; ++i) {
+            if (ints[i][1] < ni[0])
+                res.push_back(ints[i]);
+            else {
+                ni[0] = min(ni[0], ints[i][0]);
+                ni[1] = max(ni[1], ints[i][1]);
+            }
+        }
+        res.push_back(ni);
+        res.insert(end(res), begin(ints) + i, end(ints));
+        return res;
+    }
+    
 private:
     vector<vector<int>> myInsert(vector<vector<int>>& intervals, vector<int>& newInterval) {
         // binary search for the insertion location.
