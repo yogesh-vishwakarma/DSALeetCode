@@ -1,16 +1,16 @@
 class Node{ // doubly linked list
-    public:
-        int key;
-        int val;
-        Node *next = NULL;
-        Node *prev = NULL;
+public:
+    int key;
+    int val;
+    Node *next = NULL;
+    Node *prev = NULL;
 };
 
 class LRUCache{
     private:
     
-    int cap; //to store capacity of cache
-    int size = 0; // number of element in cache
+    int cap; //max capacity of cache
+    int size = 0; // Curr size
     Node *head = NULL; // initialize head of list to null
     Node *tail = NULL; // intitialize tail to null
     unordered_map<int, Node*> mp; //initialize hash map instanse
@@ -35,7 +35,7 @@ class LRUCache{
         head = node;
     }
 
-    void addNode(Node *node){ // to add new node to the list
+    void addNode(Node *node){ // to add new node in front of Doubly linked list
         head->prev = node;
         node->next = head;
         head = node;
