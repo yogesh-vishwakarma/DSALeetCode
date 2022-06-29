@@ -1,31 +1,39 @@
 class LRUCache {
+private:
+    queue<pair<int,int>> q; // <key, seq>
+    unordered_map<int,pair<int,int>> m; // <key, <value, seq>>
+    int cap, seq;
 public:
-    unordered_map <int, int> m, cnt;
-    queue <int> q;
-    int n;
-    LRUCache(int capacity) : n(capacity) {}
-    
+    LRUCache(int capacity):cap(capacity),seq(0) {
+        
+    }
     
     int get(int key) {
-        if (cnt.find(key) == cnt.end()) 
-            return -1;
-        q.push(key);
-        cnt[key]++;
-        return m[key];
+        if (m.find(key)!=m.end()) {
+            m[key].second = ++seq;
+            q.push({key, seq});
+            return m[key].first;
+        }
+        else return -1;
     }
     
     void put(int key, int value) {
-        q.push(key);
-        cnt[key]++;
-        m[key] = value;
-        while (cnt.size() > n) {
-            int cur = q.front(); q.pop();
-            if (cnt[cur]-- == 1) 
-                cnt.erase(cur);
+        if (m.find(key)!=m.end()){
+            m[key] = {value, ++seq};
+            q.push({key, seq});
+        }
+        else {
+            if (cap==0){
+                while(m[q.front().first].second > q.front().second) q.pop();
+                m.erase(q.front().first); q.pop();
+                ++cap;
+            }
+            m[key] = {value, ++seq};
+            q.push({key,seq});
+            --cap;
         }
     }
 };
-
 /**
  * Your LRUCache object will be instantiated and called as such:
  * LRUCache* obj = new LRUCache(capacity);
