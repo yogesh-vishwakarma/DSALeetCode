@@ -1,6 +1,33 @@
 class Solution {
 public:
+    /* Optimal Approach*/
     vector<int> maxSlidingWindow(vector<int>& nums, int k) {
+        // support variables
+        int len = nums.size() - k + 1, higherValues[k], startPos = 0, endPos = 0;
+        vector<int> res(len);
+        // preparing dq with the first k - 1 elements
+        k--;
+        for (int i = 0; i < k; i++) {
+            while (endPos != startPos && nums[higherValues[endPos - 1]] <= nums[i]) endPos = endPos - 1;
+            higherValues[endPos++] = i;
+        }
+        k++;
+        // parsing through nums
+        for (int i = 0, n = k - 1; i < len; i++, n++) {
+            // popping smaller values
+            while (endPos != startPos && nums[higherValues[endPos ? endPos - 1 : k - 1]] <= nums[n]) endPos = endPos ? endPos - 1 : k - 1;
+            // adding the current index n
+            higherValues[endPos++] = n;
+            if (endPos == k) endPos = 0;
+            // updating res
+            res[i] = nums[higherValues[startPos]];
+            // popping the first element out
+            if (higherValues[startPos] == i) startPos = (startPos + 1) % k;
+        }
+        return res;
+    }
+    /*Dq approach*/
+    vector<int> maxSlidingWindow2(vector<int>& nums, int k) {
         deque<int> dq;vector<int> ans;
         // we are storing indexes in dq
         for (int i=0; i<nums.size(); i++) {
