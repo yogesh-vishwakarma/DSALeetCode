@@ -23,31 +23,13 @@ We don't need to edit the actual array like that, we just need to make the compa
                    : target < nums[0]                     -> checking which half does the target exist in 
                        ? -INFINITY                        -> target is in second half and mid is in first so it should be -inf
                        : INFINITY;                        -> target is in first half then mid is in second half should be +inf
-*/  
-     int search1(vector<int>& nums, int target) {
-        int lo = 0, hi = nums.size();
-        while (lo < hi) {
-            int mid = (lo + hi) / 2;
-
-            double comparator = (nums[mid] < nums[0]) == (target < nums[0])
-                       ? nums[mid]
-                       : target < nums[0] ? -INFINITY : INFINITY;
-
-            if (comparator < target)
-                lo = mid + 1;
-            else if (comparator > target)
-                hi = mid;
-            else
-                return mid;
-        }
-        return -1;
-    }
+*/
     
     
     int search(vector<int> &nums, int target){
         int left(0), right(nums.size());
         while(left<right){
-//             int mid = (left+right)/2;
+            int mid = (left+right)/2;
 //             double comp = 0;
 //             // comp = = (nums[mid] < nums[0]) == (target < nums[0]) ? nums[mid] : target < nums[0] ? -INFINITY : INFINITY;
             
@@ -63,7 +45,6 @@ We don't need to edit the actual array like that, we just need to make the compa
 //                 right = mid;
 //             else
 //                 return mid;
-            int mid = (left + right) / 2;
 
             double comparator = (nums[mid] < nums[0]) == (target < nums[0])
                        ? nums[mid]
