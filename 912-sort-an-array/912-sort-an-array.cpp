@@ -35,6 +35,7 @@ public:
                 Quick_sort(nums,0,n-1);
                 break;
             default:
+                sort(nums.begin(),nums.end());
                 break;
         }
         return nums;
