@@ -30,18 +30,18 @@ We don't need to edit the actual array like that, we just need to make the compa
         int left(0), right(nums.size());
         while(left<right){
             int mid = (left+right)/2;
-//             double comp = 0;
-//             // comp = = (nums[mid] < nums[0]) == (target < nums[0]) ? nums[mid] : target < nums[0] ? -INFINITY : INFINITY;
+            double comp;
+            comp = (nums[mid] < nums[0]) == (target < nums[0]) ? nums[mid] : target < nums[0] ? -INFINITY : INFINITY;
             
-//             if(target > nums[0] == nums[mid] > nums[0]) // both target & mid are in same side
-//                 comp = nums[mid];
-//             else
-//                 // target>nums[0] means target is in left side, so mid is in right side = INF & vice-versa
-//                 (target >nums[0])?comp = INFINITY :  comp = -INFINITY;
+            // if((target > nums[0]) == (nums[mid] > nums[0])) // both target & mid are in same side
+            //     comp = nums[mid];
+            // else
+            //     // target>nums[0] means target is in left side, so mid is in right side = INF & vice-versa
+            //     (target >nums[0])?comp = INFINITY :  comp = -INFINITY;
             
-            double comp = (nums[mid] < nums[0]) == (target < nums[0])
-                       ? nums[mid]
-                       : target < nums[0] ? -INFINITY : INFINITY;
+            // double comp = (nums[mid] < nums[0]) == (target < nums[0])
+            //            ? nums[mid]
+            //            : target < nums[0] ? -INFINITY : INFINITY;
             
             if(comp < target)
                 left = mid+1;
@@ -49,14 +49,6 @@ We don't need to edit the actual array like that, we just need to make the compa
                 right = mid;
             else
                 return mid;
-
-
-            // if (comparator < target)
-            //     left = mid + 1;
-            // else if (comparator > target)
-            //     right = mid;
-            // else
-            //     return mid;
         }
         return -1;
     }
