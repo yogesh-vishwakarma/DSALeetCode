@@ -5,7 +5,8 @@ public:
         stack<int> st;// int stPointer (0);
         for(int el : nums2){
             while( !st.empty() && st.top() < el){
-                ump[st.top()] = el; // here we are updating biggest element for all the smallest element from curr
+                ump[st.top()] = el; 
+                // here we are updating biggest element for all the smallest element from curr
                 st.pop();
             } 
             st.push(el);
