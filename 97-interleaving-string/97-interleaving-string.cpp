@@ -33,19 +33,16 @@ public:
         for (int j = 0; j <= n; j++)  
             dp[j] = s2.substr(0, j)==s3.substr(0, j); 
         // here we are storing longest common prefix between s2 & s3
-        for(auto el:dp) cout<<el<<" ";cout<<endl;
     
         for (int i = 1; i <= m; i++){
             dp[0] = s1.substr(0, i)==s3.substr(0, i); // common prefix is available b/w s1 & s2 at index i
             for (int j = 1; j <= n; j++)
                 dp[j] = (dp[j] && s3[i+j-1]==s1[i-1]) || (dp[j-1] && s3[i+j-1]==s2[j-1]);
-            
-        for(auto el:dp) cout<<el<<" ";cout<<endl;
         }
         return dp[n];
         
         // bool DP[m+1][n+1];
-        // /* bottom up Approach */ not working
+        // /* bottom up Approach */
         // for(int i=0; i<= m; i++){
         //     for(int j=0; j<= n; j++){
         //         if(i==0 && j==0)
