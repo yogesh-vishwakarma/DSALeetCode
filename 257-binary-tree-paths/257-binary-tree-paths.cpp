@@ -10,22 +10,30 @@
  * };
  */
 class Solution {
-public:
-    void binaryTreePaths(vector<string>& result, TreeNode* root, string t) {
-        if(!root->left && !root->right) {
-            result.push_back(t);
+public:    
+    void solve(TreeNode* root, string temp, vector<string> &ans) {
+        if(root == NULL)
+            return;
+        
+        if(root->left == NULL and root->right == NULL) {
+            temp += to_string(root->val);
+            ans.push_back(temp);
             return;
         }
-
-        if(root->left) binaryTreePaths(result, root->left, t + "->" + to_string(root->left->val));
-        if(root->right) binaryTreePaths(result, root->right, t + "->" + to_string(root->right->val));
+        
+        temp += to_string(root->val);
+        temp += "->";
+        
+        solve(root->left, temp,ans);
+        solve(root->right, temp,ans);
+        
+        temp.pop_back(); 
+        temp.pop_back(); 
+        
     }
-
     vector<string> binaryTreePaths(TreeNode* root) {
-        vector<string> result;
-        if(!root) return result;
-
-        binaryTreePaths(result, root, to_string(root->val));
-        return result;
+        vector<string> ans;
+        solve(root, "",ans);
+        return ans;
     }
 };
