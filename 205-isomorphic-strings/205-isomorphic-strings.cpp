@@ -1,15 +1,21 @@
 class Solution {
 public:
     bool isIsomorphic(string s, string t) {
-        char map_s[128] = { 0 };
-        char map_t[128] = { 0 };
-        int len = s.size();
-        for (int i = 0; i < len; ++i)
-        {
-            if (map_s[s[i]]!=map_t[t[i]]) return false;
-            map_s[s[i]] = i+1;
-            map_t[t[i]] = i+1;
+        char d[256], e[256];
+        int i;
+        for (i = 0; i < 256; i++)
+            d[i] = 0;
+        for (i = 0; i < 256; i++)
+            e[i] = 0;
+        
+        for (i = 0; i < s.size(); i++) {
+            if (d[s[i]] == 0 and e[t[i]] == 0) {
+                d[s[i]] = t[i];
+                e[t[i]] = s[i];               
+            }
+            else if (d[s[i]] != t[i] or e[t[i]] != s[i])
+                return false;
         }
-        return true;    
+        return true;
     }
 };
