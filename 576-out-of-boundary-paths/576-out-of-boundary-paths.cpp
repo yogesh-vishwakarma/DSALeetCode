@@ -1,3 +1,5 @@
+// good post : https://leetcode.com/problems/out-of-boundary-paths/discuss/657850/Evolve-from-brute-force-to-dp
+
 class Solution {
 public:
     int findPaths(int m, int n, int N, int i, int j) {
