@@ -1,87 +1,70 @@
-class LRUCache{
-    /*
+class LRUCache {
+public:
+    class node {
+        public:
+            int key;
+            int val;
+            node* next;
+            node* prev;
+        node(int _key, int _val) {
+            key = _key;
+            val = _val; 
+        }
+    };
     
-    When we access an item in the cache it moves to the front of the list as it is the most recently used item.
-
-    When we want to remove an item we remove it from the last of the list as it is the least recently used item in the cache.
+    node* head = new node(-1,-1);
+    node* tail = new node(-1,-1);
     
-    When we insert an item we insert it into the front of the list as it is the most recently used item.
-
-    The idea is to store the keys in the map and its corrosponding values into the list...
+    int cap;
+    unordered_map<int, node*>m;
     
-    Note : splice() function here takes the element at the m[key] and places it at the beginning of the list..
+    LRUCache(int capacity) {
+        cap = capacity;    
+        head->next = tail;
+        tail->prev = head;
+    }
     
+    void addnode(node* newnode) {
+        node* temp = head->next;
+        newnode->next = temp;
+        newnode->prev = head;
+        head->next = newnode;
+        temp->prev = newnode;
+    }
     
-    */
-    public:
-        list<pair<int,int>> l;
-        unordered_map<int,list<pair<int, int>>::iterator> m;
-        int size;
-        LRUCache(int capacity){size=capacity;}
+    void deletenode(node* delnode) {
+        node* delprev = delnode->prev;
+        node* delnext = delnode->next;
+        delprev->next = delnext;
+        delnext->prev = delprev;
+    }
+    
+    int get(int key_) {
+        if (m.find(key_) != m.end()) {
+            node* resnode = m[key_];
+            int res = resnode->val;
+            m.erase(key_);
+            deletenode(resnode);
+            addnode(resnode);
+            m[key_] = head->next;
+            return res; 
+        }
+    
+        return -1;
+    }
+    
+    void put(int key_, int value) {
+        if(m.find(key_) != m.end()) {
+            node* existingnode = m[key_];
+            m.erase(key_);
+            deletenode(existingnode);
+        }
+        if(m.size() == cap) {
+          m.erase(tail->prev->key);
+          deletenode(tail->prev);
+        }
         
-        int get(int key){
-            if(m.find(key)==m.end())
-                return -1;
-            l.splice(l.begin(),l,m[key]);
-            return m[key]->second;
-        }
-        void put(int key, int value){
-            if(m.find(key)!=m.end()){
-                l.splice(l.begin(),l,m[key]);
-                m[key]->second=value;
-                return;
-            }
-            if(l.size()==size){
-                auto d_key=l.back().first;
-                l.pop_back();
-                m.erase(d_key);
-            }
-            l.push_front({key,value});
-            m[key]=l.begin();
-        }
+        addnode(new node(key_, value));
+        m[key_] = head->next; 
+    }
 };
-
-
-
-// class LRUCache2 {
-// private:
-//     queue<pair<int,int>> q; // <key, seq>
-//     unordered_map<int,pair<int,int>> m; // <key, <value, seq>>
-//     int cap, seq;
-// public:
-//     LRUCache(int capacity):cap(capacity),seq(0) {}// parameterized constructor
-    
-//     int get(int key) {
-//         if (m.find(key)!=m.end()) {
-//             m[key].second = ++seq;
-//             q.push({key, seq});
-//             return m[key].first;
-//         }
-//         else return -1;
-//     }
-    
-//     void put(int key, int value) {
-//         if (m.find(key)!=m.end()){
-//             m[key] = {value, ++seq};
-//             q.push({key, seq});
-//         }
-//         else {
-//             if (cap==0){// if no current capacity
-//                 // we are removing extra operations
-//                 while(m[q.front().first].second > q.front().second)
-//                     q.pop();
-//                 // we found the least recently used opration, so remove it and increase cap.
-//                 m.erase(q.front().first);
-//                 q.pop();
-//                 ++cap;
-//             }
-//             m[key] = {value, ++seq};
-//             q.push({key,seq});
-//             --cap;
-//         }
-//         queue<pair<int,int>> printQ = q;
-//         while(!printQ.empty())
-//             cout << q.front().first <<" "<<q.front().second <<endl;
-//         cout << endl;
-//     }
-// };
