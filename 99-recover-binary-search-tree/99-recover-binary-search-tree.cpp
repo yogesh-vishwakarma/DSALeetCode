@@ -10,21 +10,16 @@
  * };
  */
 class Solution {
-    TreeNode* first;
+    TreeNode* first; TreeNode* second;
     TreeNode* parent;
-    TreeNode* middle;
-    TreeNode* last;
 public:
     void recoverTree(TreeNode* root) {
-        first = middle = last = NULL;
+        first = second = NULL;
         parent = new TreeNode(INT_MIN);
         
         inorderMod(root);
         
-        if(first && last)
-            swap(first->val, last->val);
-        // else if(first && middle)
-        //     swap(first->val, middle->val);        
+        swap(first->val, second->val);
     }
     
     void inorderMod(TreeNode * root){
@@ -34,11 +29,8 @@ public:
         if(parent && root->val < parent->val){
             if(!first){
                 first = parent;
-                last = root;
             }
-            else{
-                last = root;
-            }
+            second = root;
         }
         parent = root;
         inorderMod(root->right);
