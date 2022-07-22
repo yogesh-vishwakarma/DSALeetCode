@@ -1,27 +1,52 @@
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode() : val(0), next(nullptr) {}
- *     ListNode(int x) : val(x), next(nullptr) {}
- *     ListNode(int x, ListNode *next) : val(x), next(next) {}
- * };
- */
 class Solution {
 public:
-    ListNode *partition(ListNode *head, int x) {
-        ListNode node1(0), node2(0);
-        ListNode *p1 = &node1, *p2 = &node2;
-        while (head) {
-            if (head->val < x)
-                p1 = p1->next = head;
-            else
-                p2 = p2->next = head;
-            head = head->next;
+    ListNode* partition(ListNode* head, int x) {
+        
+        if(!head || !head->next) 
+            return head;
+        
+        ListNode* temp=head;
+        ListNode *curr=nullptr,*tail=nullptr ;    //curr= node just before the having value less than x
+                                                  // tail= first node having value just greater than x
+        
+        if(head->val>=x){               //checking if smaller nodes will become head or not
+            tail=head;                           
         }
-        p2->next = NULL;
-        p1->next = node2.next;
-        return node1.next;
+        
+        
+        
+        // smaller nodes will come after curr and the last node of these will point to tail
+        
+        
+        
+        while(temp){
+            if(temp->next and temp->next->val >= x and !curr and !tail){ 
+                curr=temp;
+                tail=temp->next;
+                temp=temp->next;
+
+
+            } 
+            else if(temp->next and temp->next->val < x and (curr || tail)){
+                if(curr){
+                    curr->next=temp->next;
+                    temp->next = temp->next->next;
+                    curr=curr->next;
+                }
+                else{
+                    head=temp->next;
+                    temp->next=head->next;
+                    head->next=temp;
+                    curr=head;
+                }
+            }
+            else temp=temp->next;
+        }
+        
+        // pointing the last node to tail
+        if(curr)
+            curr->next=tail;
+        
+        return head;
     }
 };
