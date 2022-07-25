@@ -10,17 +10,15 @@ public:
         return {-1,-1};
         */
         
-        int n = nums.size();
-        int s=0, e=n-1;
-        int start = -1;
-        int end = -1;
+        int n = nums.size(), s=0, e=n-1;
+        int res1 = -1, res2 = -1;
         
         //For First Occurence(i.e. Lower_Bound)
         while(s<=e){
             int mid = (s+e)/2;
             if(nums[mid] == target){
-                start = mid;
-                e = mid-1;
+                res1 = mid;
+                e = mid-1; // diffrence
             }
             else if(nums[mid] > target)
                 e = mid-1;
@@ -31,16 +29,15 @@ public:
         s = 0, e = n-1;
         while(s<=e){
             int mid = (s+e)/2;
-            if(nums[mid] == target)
-            {
-                end = mid;
-                s = mid+1;
+            if(nums[mid] == target){
+                res2 = mid;
+                s = mid+1; // diffrence
             }
             else if(nums[mid] > target)
                 e = mid-1;
             else
                 s = mid+1;
         }
-        return {start,end};  
+        return {res1,res2};  
     }
 };
