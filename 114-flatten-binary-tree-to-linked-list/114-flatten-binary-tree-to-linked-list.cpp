@@ -11,15 +11,14 @@
  */
 class Solution {
 public:
-    TreeNode * prev = NULL;
     void flatten(TreeNode *root) {
         TreeNode* prev = NULL;
-        // flattenRec(root);
+        flattenRec(root);
         // flattenIterative(root); // iteratively using stack
-        MorrisTraversal(root);
+        // MorrisTraversal(root);
         
     }
-    
+    TreeNode * prev = NULL;
     void flattenRec(TreeNode * root) {
       if (root == NULL) 
           return;
@@ -31,7 +30,8 @@ public:
     }
     
    void flattenIterative(TreeNode * root) {
-      if (root == NULL) return;
+      if (root == NULL) 
+          return;
       stack < TreeNode * > st;
       st.push(root);
       while (!st.empty()) {
