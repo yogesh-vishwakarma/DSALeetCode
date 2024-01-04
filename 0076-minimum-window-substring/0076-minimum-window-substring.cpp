@@ -12,6 +12,26 @@ public:
             }  
         }
         return d==INT_MAX? "":s.substr(head, d);
-        
+        // vector<int> hashArr(128, 0);
+        // for(char el: t){
+        //     hashArr[el]++;
+        // }
+        // int left = 0, validator = t.size();
+        // int subStrHead = 0, subStrTail = INT_MAX, strSize = s.size();
+        // for(int idx = 0; idx < strSize; idx++){
+        //     if(hashArr[s[idx]] > 0){
+        //         validator --;
+        //     }
+        //     hashArr[s[idx]] --;
+        //     while(validator == 0 ){
+        //         subStrTail = min(subStrTail, idx - left + 1);
+        //         subStrHead = left;
+        //         if(hashArr[s[left]] == 0){ // making the substring shorter
+        //             validator++;
+        //         }
+        //         hashArr[s[left]]++; left++;
+        //     }
+        // }
+        // return subStrTail == INT_MAX? "" : s.substr(subStrHead, subStrTail);
     }
 };
