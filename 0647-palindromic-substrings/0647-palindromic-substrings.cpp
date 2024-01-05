@@ -13,6 +13,7 @@ public:
             }
 
             // Count substrings with consecutive identical characters
+            // it will be the Nth triangular number (defined as N * (N + 1) / 2)
             count += (right - left) * (right - left + 1) / 2;
 
             // Move the center to the right of consecutive identical characters
