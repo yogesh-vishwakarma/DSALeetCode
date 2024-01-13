@@ -1,3 +1,4 @@
+// https://leetcode.com/problems/group-anagrams/discuss/2238225/Prime-Decomposition-or-Simple-Clean-C%2B%2B-Faster-than-98
 class Solution {
   int primes[26] = {2,  3,  5,  7,  11, 13, 17, 19, 23, 29, 31, 37, 41,
                     43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101};
