@@ -9,12 +9,19 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
+ int max_height(TreeNode* root)
+ {
+     if(root == NULL)
+     {
+        return 0;
+     }
+     int l = max_height(root->left);
+     int r = max_height(root->right);
+     return max(l, r) + 1;
+ }
 class Solution {
 public:
     int maxDepth(TreeNode* root) {
-        if(root == nullptr){
-            return 0;
-        }
-        return max(maxDepth(root->left) , maxDepth(root->right)) + 1;
+        return max_height(root);
     }
 };
