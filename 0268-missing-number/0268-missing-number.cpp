@@ -1,6 +1,6 @@
 class Solution {
 public:
-    int missingNumber1(vector<int>& nums) {
+    int missingNumber(vector<int>& nums) {
         int sum(0), res, n(nums.size());
         for(auto i : nums)
             sum +=i;
@@ -8,7 +8,7 @@ public:
         return res;
     }
     /*  Cyclic Sort */
-    int missingNumber(vector<int>& nums) {
+    int missingNumber1(vector<int>& nums) {
       int start=0; int n = nums.size();
         
         while(start<n){
