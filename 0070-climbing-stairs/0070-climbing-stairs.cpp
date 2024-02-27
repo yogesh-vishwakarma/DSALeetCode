@@ -1,10 +1,11 @@
 class Solution {
 public:
     int climbStairs(int n) {
-        vector<int> cache(n+1, 1);
+        int lastWayCount = 1, ans = 1;
         for(int i = 2; i<= n;i++){
-            cache[i] = cache[i -1] + cache[i-2];
+            ans = lastWayCount + ans;
+            lastWayCount = ans - lastWayCount;
         }
-        return cache[n];
+        return ans;
     }
 };
