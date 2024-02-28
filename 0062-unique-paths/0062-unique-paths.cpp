@@ -1,17 +1,23 @@
 class Solution {
 public:
     int uniquePaths(int m, int n) {
-        vector<vector<int>> cache(m+1, vector<int>(n+1, -1));
-        return getAllUniquePath(m-1,n-1,cache);
-        
+        vector<int> prev(n, 0);
+    for (int i = 0; i < m; i++) {
+        vector<int> temp(n, 0); // Create a temporary vector to represent the current row.
+        for (int j = 0; j < n; j++) {
+            if (i == 0 && j == 0) {
+                temp[j] = 1;
+                continue;
+            }
+            int up = 0, left = 0;
+            if (i > 0)
+                up = prev[j];
+            if (j > 0)
+                left = temp[j - 1];
+            temp[j] = up + left;
+        }
+         prev = temp; // Update the previous row with the values calculated for the current row.
     }
-    int getAllUniquePath(int currRow, int currCol, vector<vector<int>> &cache){
-        if(currRow == 0 || currCol == 0){
-            return 1;
-        }
-        if(cache[currRow][currCol] == -1){
-            cache[currRow][currCol] = getAllUniquePath(currRow -1, currCol, cache) + getAllUniquePath(currRow, currCol -1, cache);
-        }
-        return cache[currRow][currCol];
+    return prev[n - 1];
     }
 };
