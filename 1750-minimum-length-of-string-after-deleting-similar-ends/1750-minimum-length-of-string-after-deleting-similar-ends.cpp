@@ -3,7 +3,6 @@ public:
     int minimumLength(string s) {
         int prefixP = 0, suffixP = s.size() - 1;
         while (prefixP < suffixP && s[prefixP] == s[suffixP]) {
-            cout << prefixP << suffixP << endl;
             while (prefixP + 1 < suffixP && s[prefixP] == s[prefixP + 1])
                 prefixP++;
             while (suffixP - 1 > prefixP && s[suffixP] == s[suffixP - 1])
