@@ -19,13 +19,10 @@ public:
 
         for(int currRow = 1; currRow < rowCount; currRow++){
             for(int currCol = 1; currCol < colCount; currCol++){
-                if(matrix[0][currCol] == 0 || matrix[currRow][0] == 0){
-                    matrix[currRow][currCol] = 0;
-                }
-                // matrix[currRow][currCol] = !matrix[0][currCol] || !matrix[currRow][0]? 0: matrix[currRow][currCol];
-                // if(ifFirstRowZero){
-                //     matrix[0][currCol] = 0;
+                // if(matrix[0][currCol] == 0 || matrix[currRow][0] == 0){
+                //     matrix[currRow][currCol] = 0;
                 // }
+                matrix[currRow][currCol] = !matrix[0][currCol] || !matrix[currRow][0]? 0: matrix[currRow][currCol];
             }
         }
 
