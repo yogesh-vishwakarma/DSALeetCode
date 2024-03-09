@@ -1,6 +1,9 @@
 class Solution {
 public:
     int getCommon(vector<int>& nums1, vector<int>& nums2) {
+        ios::sync_with_stdio(0);
+        cin.tie(0);
+        cout.tie(0);
         int len1 = nums1.size(), len2 = nums2.size();
         int p1 = 0, p2 = 0; int minCommon = -1;
         while(p1 < len1 && p2 < len2){
