@@ -1,26 +1,22 @@
 class Solution {
 public:
     vector<int> findMissingAndRepeatedValues(vector<vector<int>>& grid) {
-        int n = grid.size();
-        vector<int> freq((n*n)+1,0);
-        
-        for(int i=0; i<n; i++){
-            for(int j=0; j<n; j++){
-                int x = grid[i][j];
-                freq[x]++;
+        long long gridSum = 0, gridSqSum = 0;
+        for (auto row : grid) {
+            for (int el : row) {
+                gridSum += el;
+                gridSqSum += el * el;
             }
         }
-        
-        vector<int> ans(2,0);
-        for(int i=1; i<=n*n; i++){
-            if(freq[i] == 2){
-                ans[0] = i;
-            }
-            else if(freq[i] == 0){
-                ans[1] = i;
-            }
-        }
-        
-        return ans;
+        int n = grid.size() * grid.size();
+        long long nSum = n * (n + 1) / 2;
+        long long nSqSum = n * (n + 1) * (2 * n + 1) / 6;
+        vector<int> result;
+        int duplicateEl =
+            (((gridSqSum - nSqSum) / (gridSum - nSum)) + gridSum - nSum) / 2;
+        int missingEl = gridSum - nSum - duplicateEl;
+        result.push_back((duplicateEl));
+        result.push_back(abs(missingEl));
+        return result;
     }
 };
